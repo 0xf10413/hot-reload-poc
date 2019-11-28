@@ -1,6 +1,21 @@
 syntax = "proto3";
 service Mq {
   rpc Start(StartQ) returns (StartR) {}
+  rpc Stop(StopQ) returns (StopR) {}
 }
 
+message StartQ {
 
+}
+
+message StartR {
+
+}
+
+message StopQ {
+
+}
+
+message StopR {
+
+}

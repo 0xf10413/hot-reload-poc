@@ -19,14 +19,13 @@ GDB=cgdb
 CFLAGS=-std=c99 -g -pedantic -Wall -Wextra -Wshadow -Wpointer-arith \
        -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes \
 			 -Wconversion
-CXXFLAGS=-std=c++11 -g -Wall -Wextra -pedantic -Wshadow -Weffc++ \
-				 -Wconversion
+CXXFLAGS=-std=c++11 -g -Wall -Wextra -pedantic -Wshadow -Wconversion
 
 # Linker flags
-LDFLAGS=
+LDFLAGS=-lprotobuf -lgrpc++
 
 # Source files (adjust if needed)
-SRC_CXX=$(wildcard *.cpp)
+SRC_CXX=$(wildcard generated/*.cc src/*.cc)
 SRC_C=$(wildcard *.c)
 
 ###
@@ -34,7 +33,7 @@ SRC_C=$(wildcard *.c)
 #####################
 
 # Object files
-OBJ_CXX=$(SRC_CXX:%.cpp=$(BUILD_DIR)/%.o)
+OBJ_CXX=$(SRC_CXX:%.cc=$(BUILD_DIR)/%.o)
 OBJ_C=$(SRC_C:%.c=$(BUILD_DIR)/%.o)
 OBJ=$(OBJ_C)
 OBJ+=$(OBJ_CXX)
@@ -75,7 +74,7 @@ $(BUILD_DIR)/$(BIN): $(OBJ)
 
 
 # General build target
-$(BUILD_DIR)/%.o: %.cpp FORCE
+$(BUILD_DIR)/%.o: %.cc FORCE
 	@mkdir -pv $(@D)
 	$(CXX) -o $@ -c $< $(CXXFLAGS) -MMD
 
